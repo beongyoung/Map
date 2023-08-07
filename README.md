@@ -1,7 +1,13 @@
 # React native expo CLi
 
-### 1. 리액트 네이티브 프로젝트 생성 (npx create-expo-app {프로젝트 이름})
-### 2-1. Expo cli 의존성 추가 (npm install -g expo-cli)
+### 1. 리액트 네이티브 프로젝트 생성
+```
+npx create-expo-app {프로젝트 이름}
+```
+### 2-1. Expo cli 의존성 추가
+```
+npm install -g expo-cli
+```
 ### 2-2. dependencies 추가
 ```
 yarn add react-native-webview
