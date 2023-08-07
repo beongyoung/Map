@@ -1,29 +1,76 @@
 import React from "react";
-import { WebView } from "react-native-webview";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Text } from "react-native";
+import MapScreen from "./screens/map";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
-const KakaoMapScreen = () => {
-  const kakaoMapHTML = `
-  <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=159ef546a4fa251bbd1bb59f5bcbf9ef"></script>
-  </head>
-  <body>
-    <div id="map" style="width: 100%; height: 100vh;"></div>
-    <script>
-      const container = document.getElementById('map');
-      const options = {
-        center: new kakao.maps.LatLng(37.5665, 126.9780),
-        level: 3,
-      };
-      const map = new kakao.maps.Map(container, options);
-      // Add more map-related code here...
-    </script>
-  </body>
-  </html>
-  `;
+const Tab = createBottomTabNavigator();
 
-  return <WebView source={{ html: kakaoMapHTML }} style={{ flex: 1 }} />;
-};
+function MainScreen() {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          tabBarActiveTintColor: "#fb8c00",
+          tabBarShowLabel: false,
+        }}
+      >
+        <Tab.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            title: "홈",
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="home" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Map"
+          component={MapScreen}
+          options={{
+            title: "지도",
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="map" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Notification"
+          component={NotificationScreen} // Replace with a valid component
+          options={{
+            title: "알림",
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="notifications" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Mypage"
+          component={MessageScreen} // Replace with a valid component
+          options={{
+            title: "마이페이지",
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="person" color={color} size={size} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+}
+function HomeScreen() {
+  return <Text>Home</Text>;
+}
 
-export default KakaoMapScreen;
+function NotificationScreen() {
+  return <Text>Notification</Text>;
+}
+
+function MessageScreen() {
+  return <Text>Message</Text>;
+}
+
+export default MainScreen;
