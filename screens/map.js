@@ -1,92 +1,63 @@
-import React from "react";
-import { WebView } from "react-native-webview";
+import React, { useState } from "react";
+import { View, Text, Modal, TouchableOpacity } from "react-native";
+import MapView, { Marker } from "react-native-maps";
 
-const MapScreen = () => {
-  const kakaoMapHTML = `
-  <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=159ef546a4fa251bbd1bb59f5bcbf9ef"></script>
-    <style>
-      .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.4);
-      }
+function App() {
+  const [isModalVisible, setModalVisible] = useState(false);
 
-      .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-        max-width: 600px;
-      }
+  const handleMarkerPress = () => {
+    setModalVisible(true);
+  };
 
-      .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-      }
-      .close:hover,
-      .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="map" style="width: 100%; height: 100vh;"></div>
+  const closeModal = () => {
+    setModalVisible(false);
+  };
 
-    <div id="myModal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>모달 내용</p>
-      </div>
-    </div>
+  return (
+    <View style={{ flex: 1 }}>
+      <MapView
+        style={{ flex: 1 }}
+        initialRegion={{
+          latitude: 36.49828,
+          longitude: 127.272631,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+      >
+        {/* 마커 표시 */}
+        <Marker
+          coordinate={{
+            latitude: 36.49828,
+            longitude: 127.272631,
+          }}
+          onPress={handleMarkerPress}
+        />
+      </MapView>
 
-    <script>
-      const container = document.getElementById('map');
-      const options = {
-        center: new kakao.maps.LatLng(37.5665, 126.9780),
-        level: 3
-      };
-      const map = new kakao.maps.Map(container, options);
+      {isModalVisible && (
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={isModalVisible}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "flex-end",
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+            }}
+          >
+            <View style={{ backgroundColor: "white", padding: 20 }}>
+              <Text>마커를 클릭하셨습니다.</Text>
+              <TouchableOpacity onPress={closeModal}>
+                <Text>닫기</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+      )}
+    </View>
+  );
+}
 
-      // 마커 추가 예시
-      const markerPosition = new kakao.maps.LatLng(37.5665, 126.9780);
-      const marker = new kakao.maps.Marker({
-        position: markerPosition
-      });
-      marker.setMap(map);
-
-      // 모달창
-      const modal = document.getElementById('myModal');
-      const span = document.getElementsByClassName('close')[0];
-
-      // 마커 클릭 이벤트 리스너
-      kakao.maps.event.addListener(marker, 'click', function() {
-        modal.style.display = 'block';
-      });
-
-      // 모달창 닫기 이벤트 리스너
-      span.onclick = function() {
-        modal.style.display = 'none';
-      };
-    </script>
-  </body>
-</html>
-  `;
-
-  return <WebView source={{ html: kakaoMapHTML }} style={{ flex: 1 }} />;
-};
-
-export default MapScreen;
+export default App;
