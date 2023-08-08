@@ -8,11 +8,6 @@ const MapScreen = () => {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=159ef546a4fa251bbd1bb59f5bcbf9ef"></script>
     <style>
-      #map {
-        width: 500px;
-        height: 400px;
-      }
-
       .modal {
         display: none;
         position: fixed;
