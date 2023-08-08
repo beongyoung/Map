@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Text } from "react-native";
 import MapScreen from "./screens/map";
+import MypageScreen from "./screens/mypage";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 const Tab = createBottomTabNavigator();
@@ -49,7 +50,7 @@ function MainScreen() {
         />
         <Tab.Screen
           name="Mypage"
-          component={MessageScreen} // Replace with a valid component
+          component={MypageScreen} // Replace with a valid component
           options={{
             title: "마이페이지",
             tabBarIcon: ({ color, size }) => (
@@ -67,10 +68,6 @@ function HomeScreen() {
 
 function NotificationScreen() {
   return <Text>Notification</Text>;
-}
-
-function MessageScreen() {
-  return <Text>Message</Text>;
 }
 
 export default MainScreen;
